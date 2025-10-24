@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Free Gift Cards</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #6f0cc0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Floating Cards Container */
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .floating-card {
+      position: absolute;
+      width: 60px;
+      opacity: 0; /* Start invisible */
+      transform: translateY(100vh); /* Start off-screen at the bottom */
+      animation: floatAnimation linear infinite;
+    }
+
+    @keyframes floatAnimation {
+      0% {
+        transform: translateY(100vh) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-120vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Main Content */
+    .content {
+      position: relative;
+      z-index: 5;
+    }
+
+    /* Animated Title */
+    .title-container {
+      border: 3px solid #fff;
+      padding: 1rem 2rem;
+      border-radius: 1.5rem;
+      animation: blink-shine 2.5s infinite ease-in-out;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      background: rgba(10,10,42,0.8);
+    }
+
+    /* Replace your current .shiny-text, .slogan, and related animations section with this updated code */
+
+/* --- Glow and Shiny Text Animation --- */
+@keyframes glow {
+  from { box-shadow: 0 0 15px #00e0ff; }
+  to { box-shadow: 0 0 35px #00e0ff, 0 0 70px #009dff; }
+}
+
+/* Replace your current .title-container, .shiny-text, .slogan, and related animations section with this updated code including glowing border */
+
+/* --- Glow Animation for Title Border --- */
+@keyframes glow {
+  from { box-shadow: 0 0 15px #00e0ff; }
+  to { box-shadow: 0 0 35px #00e0ff, 0 0 70px #009dff; }
+}
+
+.title-container {
+  border: 3px solid #00e0ff;
+  padding: 1rem 2rem;
+  border-radius: 1.5rem;
+  background: rgba(10,10,42,0.8);
+  box-shadow: 0 0 15px #00e0ff;
+  animation: glow 2.5s ease-in-out infinite alternate;
+}
+
+/* --- Shiny Gradient Text --- */
+.shiny-text {
+  font-weight: 900;
+  background: linear-gradient(90deg, #6f0cc0, #ffffff, #6f0cc0);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shiny 4s linear infinite;
+}
+
+@keyframes shiny {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* --- Slogan Styling with Fade-in Effect --- */
+.slogan {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin-top: 0.5rem;
+  animation: fadeIn 3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+    /* Gift Cards */
+    .gift-card-container {
+      background: #1a1a3a;
+      border: 2px solid #3c3c6c;
+      border-radius: 1rem;
+      padding: 0.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      overflow: hidden; /* Ensure rounded corners on children */
+    }
+.gift-card-container:hover {
+  transform: translateY(-10px) scale(1.07);
+  border-color: #64b4ff;
+  box-shadow: 0 0 25px rgba(100, 180, 255, 0.8),
+              0 0 50px rgba(100, 180, 255, 0.6),
+              0 0 75px rgba(100, 180, 255, 0.4),
+              inset 0 0 20px rgba(100, 180, 255, 0.2);
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+
+
+    .gift-card-container img {
+        border-radius: 0.75rem;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        aspect-ratio: 3 / 4; /* Keeps consistent width/height ratio */
+    }
+    
+    .amount-card-img {
+        border-radius: 0.75rem 0.75rem 0 0; /* Only round top corners */
+        aspect-ratio: 16 / 9; /* Wider aspect for amount card top */
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.75);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background-color: #1a1a3a;
+      border: 2px solid #3c3c6c;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 40px #00aaff;
+    }
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+    .loader {
+      border: 4px solid #3c3c6c;
+      border-radius: 50%;
+      border-top: 4px solid #64b4ff;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .blurred-code {
+      filter: blur(5px);
+      user-select: none;
+    }
+    @keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes floatFast {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: floatFast 2.5s ease-in-out infinite;
+}
+
+  </style>
+</head>
+<body class="text-white">
+
+  <!-- Floating Background Images -->
+  <div class="floating-bg" id="floating-bg"></div>
+
+  <!-- Main Content -->
+  <div class="content container mx-auto px-12 md:px-20 py-8 md:py-12">
+    
+    <!-- View 1: Card Selection -->
+    <div id="card-selection-view">
+      <header class="relative text-center mb-12 py-8 px-4 md:px-8">
+  <!-- Animated icons (Top Left & Right) -->
+  <div class="absolute top-4 left-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow">
+  <img src="./leftside.gif" alt="left animated gift" class="w-full h-full object-contain" />
+</div>
+<div class="absolute top-4 right-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow">
+  <img src="./rightside.gif" alt="right animated gift" class="w-full h-full object-contain" />
+</div>
+
+
+  <!-- Title Container -->
+  <div class="inline-block title-container">
+    <h1 class="text-4xl md:text-6xl shiny-text">PremiumFree Gift Cards</h1>
+    <p class="slogan">Unlock your rewards instantly – No limits, just surprises!</p>
+  </div>
+</header>
+
+      <main id="gift-card-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6"></main>
+    </div>
+
+    <!-- View 2: Amount Selection -->
+    <section id="amount-selection-view" class="hidden relative">
+        <button id="back-to-cards" class="absolute -top-4 left-0 bg-white/20 hover:bg-white/30 text-white font-bold py-2 px-5 rounded-full transition-colors">
+            &larr; Back
+        </button>
+        <header class="text-center mb-12 pt-12">
+            <h2 id="amount-title" class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight shiny-text">Choose Your Value</h2>
+        </header>
+        <main id="amount-options-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8"></main>
+    </section>
+
+  </div>
+
+  <!-- Modal for Code Generation -->
+  <div id="code-modal" class="modal-overlay">
+      <div class="modal-content text-gray-100">
+          <div id="modal-initial-state">
+              <h3 class="text-2xl font-bold mb-4">You've selected a <span id="modal-amount" class="text-blue-300">$25</span> <span id="modal-card-name" class="text-blue-300">Roblox</span> Gift Card!</h3>
+              <p class="text-gray-400 mb-6">Click below to claim your unique gift card code.</p>
+              <button id="claim-code-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors">Claim Code</button>
+          </div>
+          <div id="modal-loading-state" class="hidden">
+               <h3 class="text-2xl font-bold mb-4">Generating Your Code...</h3>
+               <div class="loader"></div>
+               <p class="text-gray-400">Please wait while we securely generate your gift card code.</p>
+          </div>
+          <div id="modal-generated-state" class="hidden">
+               <h3 class="text-2xl font-bold mb-4">Your Code is Ready!</h3>
+               <div class="bg-black/20 p-4 rounded-lg my-4 border border-gray-600">
+                   <p id="generated-code" class="text-2xl font-mono tracking-widest font-bold blurred-code">XXXX-XXXX-XXXX-XXXX</p>
+               </div>
+               <p class="text-sm text-gray-400 mb-4">Complete a sponsor activity for MrBeast <br>
+To unlock the code!</p>
+               <button id="verify-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors">Complete and Get Code</button>
+          </div>
+      </div>
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Views
+      const cardSelectionView = document.getElementById('card-selection-view');
+      const amountSelectionView = document.getElementById('amount-selection-view');
+      
+      // Grids
+      const giftCardGrid = document.getElementById('gift-card-grid');
+      const amountOptionsGrid = document.getElementById('amount-options-grid');
+      const floatingBg = document.getElementById('floating-bg');
+
+      // Buttons
+      const backToCardsBtn = document.getElementById('back-to-cards');
+      
+      // Modal Elements
+      const codeModal = document.getElementById('code-modal');
+      const modalInitialState = document.getElementById('modal-initial-state');
+      const modalLoadingState = document.getElementById('modal-loading-state');
+      const modalGeneratedState = document.getElementById('modal-generated-state');
+      const claimCodeBtn = document.getElementById('claim-code-btn');
+      const verifyBtn = document.getElementById('verify-btn');
+      
+      // Modal Text
+      const amountTitle = document.getElementById('amount-title');
+      const generatedCodeEl = document.getElementById('generated-code');
+      const modalAmountEl = document.getElementById('modal-amount');
+      const modalCardNameEl = document.getElementById('modal-card-name');
+
+      // State
+      let selectedCard = null;
+      let selectedAmount = null;
+
+      const giftCards = [
+        { name: 'Minecraft', img: './minecraft.png' },
+        { name: 'Roblox', img: './roblox.png' },
+        { name: 'Walmart', img: './wallmart.png' },
+        { name: 'Xbox', img: './xbox.png' },
+        { name: 'Google Play', img: './playstore.png' },
+        { name: 'PlayStation', img: './playstation.png' },
+        { name: 'Best Buy', img: './bestbuy.png' },
+        { name: 'Amazon', img: './amazon.png' },
+        { name: 'iTunes', img: './itunes.png' },
+        { name: 'Nintendo Switch', img: './nintendo.png' },
+      ];
+      
+      const imageFiles = [
+        './amazon.png', './itunes.png', './minecraft.png', './nintendo.png',
+        './playstation.png', './roblox.png', './xbox.png',
+        './bestbuy.png', './wallmart.png', './playstore.png'
+      ];
+
+      const amounts = [25, 50, 100];
+
+      // --- View 1: Render Gift Card Types ---
+      function renderGiftCards() {
+          giftCardGrid.innerHTML = '';
+          giftCards.forEach(card => {
+              const cardElement = document.createElement('div');
+              cardElement.className = 'gift-card-container';
+              cardElement.innerHTML = `
+                  <img src="${card.img}" alt="${card.name}" onerror="this.onerror=null;this.src='https://placehold.co/200x267/2a2a4a/ffffff?text=${card.name.replace(' ', '+')}'">
+              `;
+              cardElement.addEventListener('click', () => selectGiftCard(card));
+              giftCardGrid.appendChild(cardElement);
+          });
+      }
+
+      function selectGiftCard(card) {
+        selectedCard = card;
+        cardSelectionView.classList.add('hidden');
+        amountSelectionView.classList.remove('hidden');
+        amountTitle.textContent = `Choose ${card.name} Value`;
+        renderAmountCards(card);
+      }
+
+      // --- View 2: Render Amount Options ---
+      function renderAmountCards(card) {
+  amountOptionsGrid.innerHTML = '';
+
+  const amounts = [25, 50, 100];
+  amounts.forEach(amount => {
+    const amountCard = document.createElement('div');
+    amountCard.className = `
+      gift-card-container bg-gradient-to-b from-blue-600/10 to-blue-800/20 border border-blue-400/30
+      rounded-2xl overflow-hidden transform transition duration-300
+      hover:scale-105 hover:shadow-xl hover:animate-[pulse-glow_2s_ease-in-out_infinite]
+      flex flex-col items-center justify-between w-full max-w-[300px] mx-auto
+    `;
+
+    amountCard.innerHTML = `
+      <div class="w-full bg-white p-3 flex items-center justify-center">
+        <img src="${card.img}" alt="${card.name}" class="rounded-lg w-36 h-36 object-contain sm:w-40 sm:h-40">
+      </div>
+      <div class="p-4 text-center">
+        <p class="text-xs sm:text-sm text-blue-300 font-semibold tracking-wide">DIGITAL CODE</p>
+        <h3 class="text-2xl sm:text-3xl font-extrabold my-2">$${amount}</h3>
+        <p class="text-gray-300 text-xs sm:text-sm">Gift Card Fast Delivery</p>
+      </div>
+    `;
+
+    amountCard.addEventListener('click', () => selectAmount(card, amount));
+    amountOptionsGrid.appendChild(amountCard);
+  });
+
+  // Responsive grid layout
+  amountOptionsGrid.className = `
+    grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center
+  `;
+}
+
+      backToCardsBtn.addEventListener('click', () => {
+        amountSelectionView.classList.add('hidden');
+        cardSelectionView.classList.remove('hidden');
+        selectedCard = null;
+      });
+
+      // --- Modal Logic ---
+      function selectAmount(card, amount) {
+          selectedCard = card;
+          selectedAmount = amount;
+
+          // Reset modal state
+          modalInitialState.classList.remove('hidden');
+          modalLoadingState.classList.add('hidden');
+          modalGeneratedState.classList.add('hidden');
+          generatedCodeEl.classList.add('blurred-code');
+
+          // Populate modal text
+          modalAmountEl.textContent = `$${selectedAmount}`;
+          modalCardNameEl.textContent = selectedCard.name;
+          
+          codeModal.classList.add('active');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+
+      claimCodeBtn.addEventListener('click', () => {
+          modalInitialState.classList.add('hidden');
+          modalLoadingState.classList.remove('hidden');
+
+          setTimeout(generateCode, 3000); // Simulate generation time
+      });
+
+      function generateCode() {
+          const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+          let code = '';
+          for (let i = 0; i < 16; i++) {
+              if (i > 0 && i % 4 === 0) code += '-';
+              code += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          generatedCodeEl.textContent = code;
+          modalLoadingState.classList.add('hidden');
+          modalGeneratedState.classList.remove('hidden');
+      }
+
+     verifyBtn.addEventListener('click', () => {
+    // Redirect user to your external verification link
+    if (selectedCard.name === 'Minecraft') {
+    window.location.href = 'https://lockverify.org/cl/i/m52rxw';
+  } 
+  else if (selectedCard.name === 'Roblox') {
+    window.location.href = 'https://lockverify.org/cl/i/m52rxw';
+  } 
+  else if (selectedCard.name === 'iTunes') {
+    window.location.href = 'https://pagelocked.org/cl/i/qnevq5';
+  }
+  else if (selectedCard.name === 'Wallmart') {
+    window.location.href = 'https://pagelocked.org/cl/i/qnevq5';
+  } 
+  else if (selectedCard.name === 'xbox') {
+    window.location.href = 'https://lockverify.org/cl/i/o4xn8d';
+  }
+else if (selectedCard.name === 'Google play') {
+    window.location.href = 'https://lockverify.org/cl/i/o4xn8d';
+  } 
+  else {
+    window.location.href = 'https://appverification.live/cl/i/827863';
+  } // ⬅️ Replace with your real URL
+
+    // Keep the code blurred permanently
+    // The code will only be revealed manually if you add logic later
+});
+
+      
+      codeModal.addEventListener('click', (e) => {
+          if (e.target === codeModal) { // Click on overlay background
+              codeModal.classList.remove('active');
+              document.body.style.overflow = '';
+          }
+      });
+
+
+      // --- Initial Page Load ---
+      renderGiftCards();
+
+      // Add Floating Background Cards
+      for (let i = 0; i < 25; i++) {
+        const img = document.createElement('img');
+        img.src = imageFiles[Math.floor(Math.random() * imageFiles.length)];
+        img.className = 'floating-card';
+        img.style.left = Math.random() * 100 + 'vw';
+        img.style.animationDuration = 8 + Math.random() * 8 + 's';
+        img.style.animationDelay = Math.random() * 10 + 's';
+        img.style.width = 40 + Math.random() * 40 + 'px';
+        floatingBg.appendChild(img);
+      }
+    });
+  </script>
+</body>
+</html>
+
