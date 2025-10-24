@@ -266,6 +266,32 @@
 .animate-float-fast {
   animation: floatFast 2.5s ease-in-out infinite;
 }
+    /* Hide floating background and animations on mobile */
+@media (max-width: 768px) {
+  .floating-bg,
+  .floating-card,
+  .animate-float-slow,
+  .animate-float-fast {
+    display: none !important;
+  }
+
+  /* Optional: adjust title box for mobile */
+  .title-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .title-container h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .title-container p {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
 
   </style>
 </head>
@@ -547,6 +573,7 @@ else if (selectedCard.name === 'Google play') {
   </script>
 </body>
 </html>
+
 
 
 
