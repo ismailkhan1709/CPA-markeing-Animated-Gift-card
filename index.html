@@ -266,31 +266,15 @@
 .animate-float-fast {
   animation: floatFast 2.5s ease-in-out infinite;
 }
-    /* Hide floating background and animations on mobile */
+    
+@/* Hide left and right floating gift animations on mobile */
 @media (max-width: 768px) {
-  .floating-bg,
-  .floating-card,
-  .animate-float-slow,
-  .animate-float-fast {
+  .left-animated-gift,
+  .right-animated-gift {
     display: none !important;
   }
-
-  /* Optional: adjust title box for mobile */
-  .title-container {
-    width: 90%;
-    padding: 1.5rem;
-  }
-
-  .title-container h1 {
-    font-size: 1.8rem;
-    text-align: center;
-  }
-
-  .title-container p {
-    font-size: 1rem;
-    text-align: center;
-  }
 }
+
 
 
   </style>
@@ -307,12 +291,13 @@
     <div id="card-selection-view">
       <header class="relative text-center mb-12 py-8 px-4 md:px-8">
   <!-- Animated icons (Top Left & Right) -->
-  <div class="absolute top-4 left-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow">
+  <div class="absolute top-4 left-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow left-animated-gift">
   <img src="./leftside.gif" alt="left animated gift" class="w-full h-full object-contain" />
 </div>
-<div class="absolute top-4 right-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow">
+<div class="absolute top-4 right-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow right-animated-gift">
   <img src="./rightside.gif" alt="right animated gift" class="w-full h-full object-contain" />
 </div>
+
 
 
   <!-- Title Container -->
@@ -573,6 +558,7 @@ else if (selectedCard.name === 'Google play') {
   </script>
 </body>
 </html>
+
 
 
 
