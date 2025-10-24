@@ -291,12 +291,16 @@
     <div id="card-selection-view">
       <header class="relative text-center mb-12 py-8 px-4 md:px-8">
   <!-- Animated icons (Top Left & Right) -->
-  <div class="absolute top-4 left-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow left-animated-gift">
+  <!-- Left animated gift -->
+<div class="hidden md:block absolute top-4 left-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow">
   <img src="./leftside.gif" alt="left animated gift" class="w-full h-full object-contain" />
 </div>
-<div class="absolute top-4 right-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow right-animated-gift">
+
+<!-- Right animated gift -->
+<div class="hidden md:block absolute top-4 right-4 w-14 h-14 md:w-24 md:h-24 animate-float-slow">
   <img src="./rightside.gif" alt="right animated gift" class="w-full h-full object-contain" />
 </div>
+
 
 
 
@@ -558,6 +562,7 @@ else if (selectedCard.name === 'Google play') {
   </script>
 </body>
 </html>
+
 
 
 
